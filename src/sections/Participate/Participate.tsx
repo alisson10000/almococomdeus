@@ -1,0 +1,5 @@
+import { CalendarCheck, ClipboardList, CookingPot, HandHeart, MapPin, Send, UsersRound } from 'lucide-react'
+import Button from '../../components/Button/Button'
+import SectionTitle from '../../components/SectionTitle/SectionTitle'
+const items=[[CalendarCheck,'Escolha a data'],[CookingPot,'Defina o cardápio'],[UsersRound,'Organize voluntários'],[Send,'Distribua convites'],[ClipboardList,'Confirme participantes'],[MapPin,'Prepare o ambiente'],[HandHeart,'Realize o encontro']] as const
+export default function Participate(){return <section className="section participate"><div className="container participate-grid"><div><SectionTitle eyebrow="Para igrejas" title="Sua igreja pode participar" text="O projeto foi concebido para ser adaptável. Organize o encontro conforme a realidade da sua congregação, priorizando acolhimento, planejamento e respeito aos visitantes."/><div className="hero-actions"><Button to="/contato">Quero implementar</Button><Button to="/projeto" variant="ghost">Ver como funciona</Button></div></div><div className="checklist">{items.map(([I,t])=><div key={t}><I/><span>{t}</span></div>)}</div></div></section>}
