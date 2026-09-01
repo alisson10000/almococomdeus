@@ -1,4 +1,4 @@
-import { Maximize2 } from 'lucide-react'
+import { Download, Maximize2 } from 'lucide-react'
 import type { Invitation } from '../../types'
 
 export default function InvitationCard({ invitation }: { invitation: Invitation }) {
@@ -8,7 +8,13 @@ export default function InvitationCard({ invitation }: { invitation: Invitation 
         <img src={invitation.image} alt={invitation.title} loading="lazy" />
         <span><Maximize2 size={18}/> Ampliar</span>
       </button>
-      <div><h3>{invitation.title}</h3><p>{invitation.description}</p></div>
+      <div>
+        <h3>{invitation.title}</h3>
+        <p>{invitation.description}</p>
+        <a className="invitation-download" href={invitation.image} download={invitation.downloadName}>
+          <Download size={18} /> Baixar imagem
+        </a>
+      </div>
     </article>
   )
 }

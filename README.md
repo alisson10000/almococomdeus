@@ -16,19 +16,12 @@ npm run build
 npm run preview
 ```
 
-## WhatsApp
+## SEO em produção
 
-Copie `.env.example` para `.env` e preencha:
-
-```env
-VITE_WHATSAPP_NUMBER=5521999999999
-```
-
-Sem o número configurado, o botão flutuante não aparece.
+Copie `.env.example` para `.env` e informe o domínio público do site em `VITE_SITE_URL`. Essa variável é usada nas URLs canônicas e nos dados estruturados.
 
 ## Observações
 
 - Convites originais estão em `src/assets/images`.
 - Os vídeos sem título explicitamente informado permanecem com nome neutro para evitar associação incorreta.
-- Não há eventos, depoimentos ou contatos inventados.
-- Formulários são somente interface nesta primeira versão e estão preparados para integração futura com API.
+- Não há depoimentos inventados.

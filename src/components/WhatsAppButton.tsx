@@ -1,2 +1,0 @@
-import { MessageCircle } from 'lucide-react'
-export default function WhatsAppButton(){const number=import.meta.env.VITE_WHATSAPP_NUMBER as string | undefined;if(!number)return null;const href=`https://wa.me/${number.replace(/\D/g,'')}?text=${encodeURIComponent('Olá! Gostaria de saber mais sobre o projeto Almoço com Deus.')}`;return <a className="whatsapp-fab" href={href} target="_blank" rel="noreferrer" aria-label="Falar pelo WhatsApp"><MessageCircle/></a>}

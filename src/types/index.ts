@@ -12,4 +12,5 @@ export interface Invitation {
   title: string
   description: string
   image: string
+  downloadName: string
 }
