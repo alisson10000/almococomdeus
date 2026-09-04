@@ -68,7 +68,7 @@ export default function ProjetoEvangelistico() {
         <div className="container evangelism-copy narrow-copy">
           <span className="eyebrow">Situação atual</span>
           <h2>Do CD para “A Igreja nas Ruas”</h2>
-          <p><strong>Este projeto ficou no passado</strong>, pois CDs já não são fabricados como antes. Mas, se você ouvir as músicas e enviá-las para que outras pessoas também as ouçam, estará ajudando a implantar o terceiro grande projeto: <strong>“A Igreja nas Ruas”</strong>.</p>
+          <p><strong>Este projeto ficou no passado</strong>, pois nem CD se fabrica mais; mas se você ouvir as músicas e compartilhá-las para  que outros as ouçam, estará nos ajudando a implantar o 3º grande projeto <strong>“A Igreja nas Ruas”</strong>.<br />... Ou então <strong>faça o download gratuito dos 2 CDs completos</strong> e <strong>playbacks</strong> e contribua conforme o Espírito Santo propuser em seu coração. Deus o abençoe.</p>
           <p>O referido projeto é composto por uma van de passageiros ou carrinha de carroceria fechada, que será equipada com <strong>6.000 watts de som automotivo</strong> e cedida gratuitamente às igrejas para evangelização nas praças. O veículo será acompanhado de <strong>um ou mais cantores</strong>.</p>
         </div>
       </section>

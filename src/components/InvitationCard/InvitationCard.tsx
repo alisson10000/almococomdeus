@@ -11,8 +11,8 @@ export default function InvitationCard({ invitation }: { invitation: Invitation 
       <div>
         <h3>{invitation.title}</h3>
         <p>{invitation.description}</p>
-        <a className="invitation-download" href={invitation.image} download={invitation.downloadName}>
-          <Download size={18} /> Baixar imagem
+        <a className="invitation-download" href={invitation.downloadUrl ?? invitation.image} download={invitation.downloadName}>
+          <Download size={18} /> {invitation.downloadUrl ? 'Baixar PDF' : 'Baixar imagem'}
         </a>
       </div>
     </article>

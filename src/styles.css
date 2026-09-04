@@ -218,6 +218,12 @@ button,input,select,textarea{font:inherit}
 .donation-pix p{margin:10px 0 0;color:var(--ink);overflow-wrap:anywhere}
 .prose-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:70px}
 .prose-grid p{line-height:1.75;color:var(--muted);font-size:1.05rem}
+.project-full-text{max-width:960px}
+.project-full-text h2{text-align:center;margin:0 0 28px;color:var(--ink);font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,4vw,2.7rem)}
+.project-full-text h2:not(:first-child){margin-top:52px}
+.project-full-text p,.project-full-text blockquote{font-size:1.08rem;line-height:1.85;color:var(--muted)}
+.project-full-text blockquote{margin:34px 0;padding:22px 26px;border-left:3px solid var(--gold);background:var(--cream)}
+.project-highlight{text-align:center;font-size:1.2rem!important;color:var(--ink)!important}
 .info-panel{padding:30px;border:1px solid var(--line);border-radius:20px;background:var(--cream)}
 .info-panel svg{color:var(--gold)}
 .info-panel h3{font-family:'Cormorant Garamond',serif;font-size:1.8rem}
