@@ -9,7 +9,7 @@ export default function Hero() {
       <div className="home-hero-overlay" />
       <div className="container home-hero-content">
         <div className="hero-copy">
-          <span className="eyebrow">Projeto evangelístico de acolhimento</span>
+          <span className="eyebrow">Projeto evangelístico </span>
           <h1>Almoço <em>com Deus</em></h1>
           <p className="hero-lead">Uma mesa preparada para receber famílias, compartilhar alegria, música, comunhão e a Palavra de Deus.</p>
           <p>Conheça uma iniciativa criada para aproximar pessoas, famílias e igrejas por meio de momentos especiais de acolhimento e confraternização.</p>

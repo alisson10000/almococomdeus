@@ -1,11 +1,8 @@
 import { useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
 import Hero from '../sections/Hero/Hero'
-import About from '../sections/About/About'
-import HowItWorks from '../sections/HowItWorks/HowItWorks'
-import Modalities from '../sections/Modalities/Modalities'
-import Objectives from '../sections/Objectives/Objectives'
 import Invitations from '../sections/Invitations/Invitations'
+import { ProjectDocument } from './Projeto'
 
 export default function Home(){
   const location = useLocation()
@@ -18,5 +15,5 @@ export default function Home(){
     return () => window.clearTimeout(timer)
   }, [location.hash])
 
-  return <main><Hero/><About/><HowItWorks/><Modalities/><Objectives/><Invitations/></main>
+  return <main><Hero/><ProjectDocument/><Invitations/></main>
 }

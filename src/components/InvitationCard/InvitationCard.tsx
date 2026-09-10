@@ -12,7 +12,7 @@ export default function InvitationCard({ invitation }: { invitation: Invitation 
         <h3>{invitation.title}</h3>
         <p>{invitation.description}</p>
         <a className="invitation-download" href={invitation.downloadUrl ?? invitation.image} download={invitation.downloadName}>
-          <Download size={18} /> {invitation.downloadUrl ? 'Baixar PDF' : 'Baixar imagem'}
+          <Download size={18} /> {invitation.downloadLabel ?? (invitation.downloadUrl ? 'Baixar PDF' : 'Baixar imagem')}
         </a>
       </div>
     </article>

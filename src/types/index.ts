@@ -14,4 +14,5 @@ export interface Invitation {
   image: string
   downloadUrl?: string
   downloadName: string
+  downloadLabel?: string
 }
