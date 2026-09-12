@@ -15,7 +15,6 @@ export default function Hero() {
           <p>Conheça uma iniciativa criada para aproximar pessoas, famílias e igrejas por meio de momentos especiais de acolhimento e confraternização.</p>
           <div className="hero-actions"><Button to="/projeto">Conheça todo o projeto</Button></div>
           <div className="hero-points"><span><Users/> Famílias</span><span><Music2/> Música</span><span><HeartHandshake/> Comunhão</span></div>
-          <p className="home-hero-author">Idealizado por <strong>Ev. Mister Gandhi</strong></p>
         </div>
       </div>
     </section>

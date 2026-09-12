@@ -17,18 +17,13 @@ export default function IgrejaNasRuas() {
       </section>
 
       <section className="section">
-        <div className="container streets-intro">
-          <article className="streets-copy">
+        <div className="container streets-intro streets-intro-full">
+          <article className="streets-copy streets-project-copy">
             <span className="eyebrow">O projeto</span>
             <h2>O Evangelho mais perto das pessoas</h2>
             <p>O projeto <strong>“A Igreja nas Ruas”</strong> tem como objetivo levar a mensagem do Evangelho para <strong>praças, ruas e espaços públicos</strong>.</p>
             <p>A proposta é disponibilizar gratuitamente o veículo às igrejas para a realização de trabalhos evangelísticos em praças e outros espaços públicos.</p>
           </article>
-          <div className="streets-highlights">
-            <div><MapPin /><strong>Espaços públicos</strong><span>Praças, ruas e locais de convivência.</span></div>
-            <div><Volume2 /><strong>6.000 watts</strong><span>Sistema de som automotivo planejado para o projeto.</span></div>
-            <div><Users /><strong>Equipe evangelística</strong><span>Um ou mais cantores e uma pequena equipe.</span></div>
-          </div>
         </div>
       </section>
 
