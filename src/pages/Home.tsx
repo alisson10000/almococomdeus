@@ -1,20 +1,13 @@
-﻿import { useEffect } from 'react'
+import { useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
 
 import Button from '../components/Button/Button'
 import rawHomeProjectText from '../data/home-project-text'
 import Invitations from '../sections/Invitations/Invitations'
 
-type HomeParagraph = {
+type HomeBlock = {
   text: string
-  highlight?: boolean
-  quote?: boolean
-  link?: boolean
-}
-
-type HomeSection = {
-  title: string
-  paragraphs: HomeParagraph[]
+  heading: boolean
 }
 
 const knownLinks: Record<string, string> = {
@@ -32,15 +25,18 @@ const knownLinks: Record<string, string> = {
     'https://saipos.com/sistema/hamburgueria/hamburguer-preco',
 }
 
-const titlePhrases = [
-  'SERÁ QUE VALE A PENA?',
-  'SERÁ QUE VALE MESMO A PENA?',
+const headingPhrases = [
+  'DOIS COELHOS COM UMA SÓ CAJADADA',
+  '... MAS será que vale a pena?',
+  '... Será que vale mesmo a pena?',
   'O ALMOÇO COM DEUS',
-  'Um forte apelo às mulheres e donas de casa',
-  'O objetivo principal é evangelizar e conquistar a família',
-  'MAS, NA MAIORIA DE NOSSAS IGREJAS, NÃO TEMOS RESTAURANTE! TEMOS, SIM, O PRÓPRIO TEMPLO!',
+  'É UM BOM PRETEXTO PARA LEVAR NOSSOS FAMILIARES NÃO CRISTÃOS À IGREJA.',
+  'UM FORTE APELO ÀS MULHERES E DONAS DE CASA',
+  'O OBJETIVO PRINCIPAL É EVANGELIZAR E CONQUISTAR A FAMÍLIA',
+  'MAS, NA MAIORIA DE NOSSAS IGREJAS, NÃO TEMOS RESTAURANTE; TEMOS, SIM, O PRÓPRIO TEMPLO!',
   'MAS, COM ISSO, NÃO PROFANAMOS O SANTUÁRIO? NÃO O TORNAMOS IMPURO AOS OLHOS DE DEUS?',
-  'QUAL É O MELHOR MENU?  O CACHORRO QUENTE, CLARO!',
+  'QUAL É O MELHOR CARDÁPIO?  O CARDÁPIO BARATO, DE PREPARO RÁPIDO E FÁCIL',
+  'CONTUDO, SUGIRO QUE O CARDÁPIO PARA UMA PRIMEIRA VEZ SEJA O CACHORRO-QUENTE',
   'MAS AS MESAS E CADEIRAS SÃO MUITO CARAS!',
   'SUGESTÕES:',
   'QUAIS SÃO OS OBJETIVOS DO ‘Almoço Com Deus’?',
@@ -49,72 +45,42 @@ const titlePhrases = [
   'QUEM PAGA A DESPESA?',
   'VEJA NOS 6 LINKS POSTOS ABAIXO EM LETRA MAIÚSCULA:',
   'QUAL O MELHOR DIA PARA O “ALMOÇO COM DEUS”?',
-  'UNAMOS FORÇAS EM PROL DO REINO DE DEUS!',
+  'IGREJAS UNIDAS EM PROL DO REINO DE DEUS!',
 ]
 
-function normalizeTitle(text: string) {
+function normalizeText(text: string) {
   return text
     .replace(/[“”"]/g, '')
     .replace(/\s+/g, ' ')
     .trim()
 }
 
-function isTitleBlock(text: string) {
-  const normalized = normalizeTitle(text)
+function isHeadingText(text: string) {
+  const normalized = normalizeText(text)
+  const letters = normalized.replace(/[^A-Za-zÀ-ÿ]/g, '')
 
-  return titlePhrases.some(
-    (title) => normalizeTitle(title) === normalized,
+  return (
+    headingPhrases.some(
+      (phrase) => normalizeText(phrase) === normalized,
+    ) ||
+    (normalized.length <= 120 &&
+      letters.length > 3 &&
+      normalized === normalized.toUpperCase())
   )
 }
 
-function buildHomeSections(text: string): HomeSection[] {
-  const blocks = text
+function buildBlocks(text: string): HomeBlock[] {
+  return text
     .split(/\n\s*\n/g)
-    .map((block) =>
-      block
-        .split('\n')
-        .map((line) => line.trim())
-        .filter(Boolean)
-        .join('\n'),
-    )
-    .filter(Boolean)
-
-  const firstTitle =
-    blocks.shift() ??
-    'O PROJETO EVANGELÍSTICO “ALMOÇO COM DEUS”'
-
-  const sections: HomeSection[] = [
-    {
-      title: firstTitle,
-      paragraphs: [],
-    },
-  ]
-
-  blocks.forEach((block) => {
-    if (isTitleBlock(block)) {
-      sections.push({
-        title: block,
-        paragraphs: [],
-      })
-      return
-    }
-
-    sections[sections.length - 1].paragraphs.push({
+    .map((block) => block.trimEnd())
+    .filter((block) => block.trim().length > 0)
+    .map((block) => ({
       text: block,
-      highlight:
-        sections.length === 1 &&
-        sections[0].paragraphs.length < 2,
-      quote:
-        block.startsWith('“') ||
-        block.startsWith('"'),
-      link: block.startsWith('LINK YouTube:'),
-    })
-  })
-
-  return sections
+      heading: isHeadingText(block),
+    }))
 }
 
-const homeProjectText = buildHomeSections(rawHomeProjectText)
+const homeBlocks = buildBlocks(rawHomeProjectText)
 
 function renderTextWithLinks(text: string) {
   const knownLinkEntry = Object.entries(knownLinks).find(
@@ -138,6 +104,32 @@ function renderTextWithLinks(text: string) {
         {after}
       </>
     )
+  }
+
+  const markdownLinkPattern = /\[([^\]]+)\]\(([^)]+)\)/g
+  const markdownParts = text.split(markdownLinkPattern)
+
+  if (markdownParts.length > 1) {
+    const rendered = []
+
+    for (let index = 0; index < markdownParts.length; index += 3) {
+      rendered.push(markdownParts[index])
+
+      if (markdownParts[index + 1] && markdownParts[index + 2]) {
+        rendered.push(
+          <a
+            key={`${markdownParts[index + 1]}-${index}`}
+            href={markdownParts[index + 2]}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {markdownParts[index + 1]}
+          </a>,
+        )
+      }
+    }
+
+    return rendered
   }
 
   const urlPattern = /(https?:\/\/[^\s]+)/g
@@ -167,96 +159,39 @@ function renderTextWithLinks(text: string) {
   })
 }
 
-function renderParagraph(
-  paragraph: HomeParagraph,
-  paragraphIndex: number,
-) {
-  if (paragraph.highlight) {
+function renderBlock(block: HomeBlock, index: number) {
+  if (index === 0) {
     return (
-      <p
-        key={paragraphIndex}
-        className="project-highlight"
+      <h1
+        key={index}
+        className="project-document-title"
       >
-        {renderTextWithLinks(paragraph.text)}
-      </p>
+        {block.text}
+      </h1>
     )
   }
 
-  if (paragraph.quote) {
-    return (
-      <blockquote key={paragraphIndex}>
-        {renderTextWithLinks(paragraph.text)}
-      </blockquote>
-    )
+  if (block.heading) {
+    return <h2 key={index}>{block.text}</h2>
   }
 
   return (
     <p
-      key={paragraphIndex}
+      key={index}
       className={
-        paragraph.link
+        normalizeText(block.text).startsWith('LINK YouTube:') ||
+        normalizeText(block.text).startsWith('Link:')
           ? 'home-link-line'
           : undefined
       }
     >
-      {renderTextWithLinks(paragraph.text)}
+      {block.text.split('\n').map((line, lineIndex) => (
+        <span key={`${line}-${lineIndex}`}>
+          {lineIndex > 0 && <br />}
+          {renderTextWithLinks(line)}
+        </span>
+      ))}
     </p>
-  )
-}
-
-function renderSection(
-  section: HomeSection,
-  sectionIndex: number,
-) {
-  const sectionClassName =
-    sectionIndex === 0
-      ? 'section home-document-section home-document-intro'
-      : `section home-document-section ${
-          sectionIndex % 2 === 0
-            ? 'section-soft'
-            : ''
-        }`
-
-  return (
-    <section
-      key={`${section.title}-${sectionIndex}`}
-      className={sectionClassName}
-    >
-      <article className="container project-full-text project-document">
-        {sectionIndex === 0 ? (
-          <h1 className="project-document-title">
-            {section.title}
-          </h1>
-        ) : (
-          <h2>
-            {section.title}
-          </h2>
-        )}
-
-        {section.paragraphs.map(
-          (
-            paragraph: HomeParagraph,
-            paragraphIndex: number,
-          ) =>
-            renderParagraph(
-              paragraph,
-              paragraphIndex,
-            ),
-        )}
-
-        {section.paragraphs.some((paragraph) =>
-          paragraph.text.includes(
-            'Muitas vezes culpamos o diabo por causa de nossa própria imprudência ou imperícia.',
-          ),
-        ) && (
-          <div className="home-project-action">
-            <Button to="/projeto#inicio">
-              Conheça todo o projeto
-            </Button>
-          </div>
-        )}
-      </article>
-    </section>
   )
 }
 
@@ -284,22 +219,19 @@ export default function Home() {
 
   return (
     <main id="inicio">
-      {homeProjectText.map(
-        (
-          section: HomeSection,
-          sectionIndex: number,
-        ) =>
-          renderSection(
-            section,
-            sectionIndex,
-          ),
-      )
-      }
+      <section className="section home-document-section home-document-intro">
+        <article className="container project-full-text project-document">
+          {homeBlocks.map(renderBlock)}
+
+          <div className="home-project-action">
+            <Button to="/projeto#inicio">
+              Conheça todo o projeto
+            </Button>
+          </div>
+        </article>
+      </section>
 
       <Invitations />
     </main>
   )
 }
-
-
-

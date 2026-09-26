@@ -15,6 +15,14 @@ const knownProjectLinks: Record<string, string> = {
     'https://saipos.com/sistema/hamburgueria/hamburguer-preco',
 }
 
+const highlightedProjectHeadings = [
+  'CONVIDAR PARA UM CULTO OU PARA UM SHOW DA MÚSICA GOSPEL?',
+  'Que o culto e a mensagem sejam dinâmicos',
+  'Divergências de opiniões ou termômetro do Amor?',
+  'FORÇÁ-LOS COMO?',
+  'Só há duas grandes razões que levam as pessoas a fazerem as coisas: O AMOR ou O INTERESSE Mister Gandhi',
+]
+
 function normalizeText(text: string) {
   return text
     .replace(/[“”".]/g, '')
@@ -34,6 +42,9 @@ function isHeadingBlock(block: string, index: number) {
   const upperRatio = letters.length > 0 ? upperLetters.length / letters.length : 0
 
   return (
+    highlightedProjectHeadings.some(
+      (heading) => normalizeText(heading) === normalized,
+    ) ||
     oneLine.length <= 95 &&
     !/[.!?]$/.test(oneLine) &&
     (upperRatio > 0.72 ||
@@ -94,6 +105,15 @@ function renderTextWithLinks(text: string) {
   })
 }
 
+function renderLinesWithLinks(text: string) {
+  return text.split('\n').map((line, lineIndex) => (
+    <span key={`${line}-${lineIndex}`}>
+      {lineIndex > 0 && <br />}
+      {renderTextWithLinks(line)}
+    </span>
+  ))
+}
+
 function ProjectBlock({
   block,
   index,
@@ -118,12 +138,12 @@ function ProjectBlock({
   if (text.startsWith('“') || text.startsWith('"')) {
     return (
       <blockquote>
-        {renderTextWithLinks(text)}
+        {renderLinesWithLinks(text)}
       </blockquote>
     )
   }
 
-  return <p>{renderTextWithLinks(text)}</p>
+  return <p>{renderLinesWithLinks(text)}</p>
 }
 
 export function ProjectDocument() {

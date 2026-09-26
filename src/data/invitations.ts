@@ -11,6 +11,14 @@ import envelope from '../assets/images/convite-envelope.jpeg'
 import envelopeDocx from '../assets/images/convite-envelope.docx?url'
 import feijoadaPdf from '../assets/images/convite-feijoada-pdf.pdf'
 import cafeDaManhaPdf from '../assets/images/convite-cafe-da-manha-pdf.pdf'
+import almocoSemSorteio from '../assets/images/almoco-sem-sorteio.jpeg'
+import cachorroQuenteSemSorteio from '../assets/images/cachorro-quente-sem-sorteio.jpeg'
+import cafeSemSorteio from '../assets/images/cafe-sem-sorteio.jpeg'
+import feijoadaSemSorteio from '../assets/images/feijoada-sem-sorteio.jpeg'
+import almocoSemSorteioPdf from '../assets/images/almoco-sem-sorteio.pdf'
+import cachorroQuenteSemSorteioPdf from '../assets/images/cachorro-quente-sem-sorteio.pdf'
+import cafeSemSorteioPdf from '../assets/images/cafe-sem-sorteio.pdf'
+import feijoadaSemSorteioPdf from '../assets/images/feijoada-sem-sorteio.pdf'
 
 export const invitations: Invitation[] = [
   {
@@ -66,5 +74,41 @@ export const invitations: Invitation[] = [
     downloadUrl: envelopeDocx,
     downloadName: 'convite-envelope.docx',
     downloadLabel: 'Baixar documento do word',
+  },
+
+  {
+    id: 8,
+    title: 'Convite — Almoço sem sorteio',
+    description: 'Convite - almoço sem o sorteio de 50 reais.',
+    image: almocoSemSorteio,
+    downloadUrl: almocoSemSorteioPdf,
+    downloadName: 'almoco-sem-sorteio.pdf',
+  },
+
+  {
+    id: 9,
+    title: 'Convite — Cachorro-quente sem sorteio',
+    description: 'Convite cachorro quente sem sorteio de 50 reais.',
+    image: cachorroQuenteSemSorteio,
+    downloadUrl: cachorroQuenteSemSorteioPdf,
+    downloadName: 'cachorro-quente-sem-sorteio.pdf',
+  },
+
+  {
+    id: 10,
+    title: 'Convite — Café da manhã sem sorteio',
+    description: 'Convite - cafe da manha sem o sorteio de 50 reais.',
+    image: cafeSemSorteio,
+    downloadUrl: cafeSemSorteioPdf,
+    downloadName: 'cafe-sem-sorteio.pdf',
+  },
+
+  {
+    id: 11,
+    title: 'Convite — Feijoada sem sorteio',
+    description: 'Convite - feijoada sem o sorteio de 50 reais.',
+    image: feijoadaSemSorteio,
+    downloadUrl: feijoadaSemSorteioPdf,
+    downloadName: 'feijoada-sem-sorteio.pdf',
   },
 ]

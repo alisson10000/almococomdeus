@@ -3,7 +3,9 @@ import { type MouseEvent, useState } from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
 
 const links = [
-  ['/#inicio', 'Início'], ['/#convites', 'Convites'], ['/musicas#inicio', 'Músicas'],
+  ['/#convites', 'Convites downloads'],
+  ['/musicas#inicio', 'Músicas no YouTube'],
+  ['/projeto-evangelistico#musicas-cd-gandhi', 'Músicas downloads'],
 ]
 
 export default function Header() {
@@ -39,9 +41,20 @@ export default function Header() {
 
   function openProject(target: string) {
     closeMenu()
-    const pathname = target.split('#')[0]
+    const [pathname, hash] = target.split('#')
     if (location.pathname !== pathname) return
-    window.setTimeout(() => window.scrollTo({ top: 0, behavior: 'smooth' }), 300)
+
+    window.setTimeout(() => {
+      if (!hash || hash === 'inicio') {
+        window.scrollTo({ top: 0, behavior: 'smooth' })
+        return
+      }
+
+      document.getElementById(hash)?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+      })
+    }, 300)
   }
 
   return (
@@ -64,7 +77,7 @@ export default function Header() {
               <NavLink to="/igreja-nas-ruas#inicio" onClick={() => openProject('/igreja-nas-ruas#inicio')}>A Igreja nas Ruas</NavLink>
             </div>
           </div>
-          {links.slice(1).map(([to,label]) => <NavLink key={to} to={to} onClick={to === '/#convites' ? openInvitations : to === '/musicas#inicio' ? openMusic : closeMenu} className={({isActive}) => isActive && to !== '/#convites' ? 'active' : ''}>{label}</NavLink>)}
+          {links.map(([to,label]) => <NavLink key={to} to={to} onClick={to === '/#convites' ? openInvitations : to === '/musicas#inicio' ? openMusic : to.startsWith('/projeto-evangelistico') ? () => openProject(to) : closeMenu} className={({isActive}) => isActive && to !== '/#convites' ? 'active' : ''}>{label}</NavLink>)}
         </nav>
       </div>
     </header>

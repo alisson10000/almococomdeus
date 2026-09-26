@@ -14,8 +14,8 @@ export const songs: Song[] = [
     id: 2,
     title: 'Conta pra ele',
     composer: 'Gandhi Compositor',
-    youtubeUrl: 'https://youtu.be/LOLM3SN_BWo',
-    youtubeId: 'LOLM3SN_BWo',
+    youtubeUrl: 'https://www.youtube.com/watch?v=3U6oSm5pGdk&list=RD3U6oSm5pGdk&start_radio=1',
+    youtubeId: '3U6oSm5pGdk',
     titleVerified: true
   },
   {
