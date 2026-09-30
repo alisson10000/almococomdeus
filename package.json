@@ -5,15 +5,26 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "dev:api": "node server/index.js",
+    "build": "node scripts/generate-sitemap.mjs && tsc -b && vite build",
     "preview": "vite preview",
+    "start:api": "node server/index.js",
     "lint": "eslint ."
   },
   "dependencies": {
     "@vitejs/plugin-react": "latest",
+    "bootstrap": "^5.3.8",
+    "bootstrap-icons": "^1.13.1",
+    "cors": "latest",
+    "dotenv": "latest",
+    "express": "latest",
+    "i18next": "^26.4.2",
+    "i18next-browser-languagedetector": "^8.2.1",
     "lucide-react": "latest",
+    "nodemailer": "latest",
     "react": "latest",
     "react-dom": "latest",
+    "react-i18next": "^17.0.15",
     "react-router-dom": "latest"
   },
   "devDependencies": {

@@ -68,7 +68,7 @@ export const invitations: Invitation[] = [
 
   {
     id: 7,
-    title: 'Convite - Imprima no Envelope',
+    title: 'Convite - imprima no papel adesivo e cole no envelope',
     description: 'Preencha com os dados da sua igreja.',
     image: envelope,
     downloadUrl: envelopeDocx,

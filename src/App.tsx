@@ -2,6 +2,7 @@ import { lazy, Suspense } from 'react'
 import { Route, Routes } from 'react-router-dom'
 import Header from './components/Header/Header'
 import Footer from './components/Footer/Footer'
+import GoogleTranslateManager from './components/GoogleTranslateManager'
 import ScrollToHash from './components/ScrollToHash'
 import SeoManager from './components/SeoManager'
 
@@ -12,11 +13,13 @@ const ProjetoEvangelistico = lazy(() => import('./pages/ProjetoEvangelistico'))
 const IgrejaNasRuas = lazy(() => import('./pages/IgrejaNasRuas'))
 const Musicas = lazy(() => import('./pages/Musicas'))
 const Convites = lazy(() => import('./pages/Convites'))
+const FaleConosco = lazy(() => import('./pages/FaleConosco'))
 const NotFound = lazy(() => import('./pages/NotFound'))
 
 export default function App() {
   return (
     <div className="site-shell">
+      <GoogleTranslateManager />
       <Header />
       <SeoManager />
       <ScrollToHash />
@@ -29,6 +32,7 @@ export default function App() {
           <Route path="/igreja-nas-ruas" element={<IgrejaNasRuas />} />
           <Route path="/musicas" element={<Musicas />} />
           <Route path="/convites" element={<Convites />} />
+          <Route path="/fale-conosco" element={<FaleConosco />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Suspense>

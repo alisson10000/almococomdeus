@@ -2,6 +2,7 @@ import { HeartHandshake, Mail, MapPin, Truck, Users, Volume2 } from 'lucide-reac
 import heroImage from '../assets/images/igreja-nas-ruas-hero.png'
 import carro1 from '../assets/images/carro1.png'
 import carro2 from '../assets/images/carro2.png'
+import qrCode from '../assets/images/qrcode.png'
 
 export default function IgrejaNasRuas() {
   return (
@@ -54,6 +55,7 @@ export default function IgrejaNasRuas() {
             <h2>Ajude este projeto a chegar às ruas</h2>
             <p>Estamos aceitando a doação de <strong>Kombi, van de carroceria ou van de passageiros para nove ou mais pessoas</strong>, de qualquer <strong>ano ou marca</strong>, desde que possa levar uma pequena equipe para que possamos sonorizá-la.</p>
             <p>O veículo recebido será preparado e sonorizado para utilização no projeto evangelístico <strong>“A Igreja nas Ruas”</strong>.</p>
+            <p>Também aceitamos <strong>aparelhagem de som automotiva</strong> para realizar as atividades ao ar livre.</p>
             <div className="donation-vehicle"><Truck size={38} /><span>Caso queira contribuir com qualquer quantia, mesmo que pequena, seremos muito gratos.</span></div>
             <p><strong>Deus vos abençoe.</strong></p>
           </article>
@@ -67,6 +69,10 @@ export default function IgrejaNasRuas() {
               <p><strong>Chave:</strong> Almococomdeus10@gmail.com</p>
               <p><strong>Nome:</strong> Anathan Gandhi Geththx</p>
               <p><strong>Banco:</strong> Santander</p>
+            </div>
+            <div className="donation-qrcode" id="doacoes">
+              <img src={qrCode} alt="QR Code para contribuição via PIX" loading="lazy" />
+              <span>Escaneie o QR Code para contribuir</span>
             </div>
           </aside>
         </div>

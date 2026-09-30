@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
 
 import Button from '../components/Button/Button'
+import InvitationLanguages from '../components/InvitationLanguages/InvitationLanguages'
 import rawHomeProjectText from '../data/home-project-text'
 import Invitations from '../sections/Invitations/Invitations'
 
@@ -175,7 +176,7 @@ function renderBlock(block: HomeBlock, index: number) {
     return <h2 key={index}>{block.text}</h2>
   }
 
-  return (
+  const paragraph = (
     <p
       key={index}
       className={
@@ -193,6 +194,17 @@ function renderBlock(block: HomeBlock, index: number) {
       ))}
     </p>
   )
+
+  if (normalizeText(block.text).includes('Rende 100 adesivos para 100 envelopes.')) {
+    return (
+      <div key={index}>
+        {paragraph}
+        <InvitationLanguages />
+      </div>
+    )
+  }
+
+  return paragraph
 }
 
 export default function Home() {

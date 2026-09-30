@@ -1,17 +1,32 @@
 import { ChevronDown, Menu, X } from 'lucide-react'
 import { type MouseEvent, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Link, NavLink, useLocation } from 'react-router-dom'
+import { useContrastTheme } from '../../hooks/useContrastTheme'
 
 const links = [
-  ['/#convites', 'Convites downloads'],
-  ['/musicas#inicio', 'Músicas no YouTube'],
-  ['/projeto-evangelistico#musicas-cd-gandhi', 'Músicas downloads'],
+  ['/#convites', 'nav.invitations'],
+  ['/igreja-nas-ruas#doacoes', 'nav.donations'],
+  ['/musicas#inicio', 'nav.youtubeMusic'],
+  ['/projeto-evangelistico#musicas-cd-gandhi', 'nav.musicDownloads'],
+  ['/fale-conosco#inicio', 'nav.contact'],
+]
+
+const languages = [
+  ['pt', 'PT', 'language.portuguese'],
+  ['en', 'EN', 'language.english'],
+  ['es', 'ES', 'language.spanish'],
+  ['fr', 'FR', 'language.french'],
+  ['de', 'DE', 'language.german'],
 ]
 
 export default function Header() {
   const location = useLocation()
+  const { i18n, t } = useTranslation()
   const [open, setOpen] = useState(false)
   const [projectsOpen, setProjectsOpen] = useState(false)
+  const { isDark, toggleTheme } = useContrastTheme()
+  const activeLanguage = i18n.resolvedLanguage ?? i18n.language
 
   function closeMenu() {
     setOpen(false)
@@ -61,23 +76,97 @@ export default function Header() {
     <header className="header">
       <div className="container header-inner">
         <Link className="brand" to="/" onClick={closeMenu}>
-          <span className="brand-mark">✦</span>
-          <span><strong>Almoço com Deus</strong><small>Comunhão • Música • Esperança</small></span>
+          <span className="brand-mark">*</span>
+          <span>
+            <strong>{t('brand.name')}</strong>
+            <small>{t('brand.subtitle')}</small>
+          </span>
         </Link>
-        <button className="menu-button" aria-label="Abrir menu" onClick={() => setOpen(!open)}>{open ? <X/> : <Menu/>}</button>
-        <nav className={open ? 'nav open' : 'nav'} aria-label="Navegação principal">
-          <NavLink to="/#inicio" onClick={openHome} className={({isActive}) => isActive && location.hash !== '#convites' ? 'active' : ''}>Início</NavLink>
+
+        <div className="header-actions">
+          <div className="language-flags notranslate" aria-label={t('language.label')}>
+            {languages.map(([code, label, titleKey]) => (
+              <button
+                key={code}
+                type="button"
+                className={activeLanguage.startsWith(code) ? 'active' : ''}
+                aria-label={t(titleKey)}
+                aria-pressed={activeLanguage.startsWith(code)}
+                title={t(titleKey)}
+                onClick={() => i18n.changeLanguage(code)}
+              >
+                <span className={`flag flag-${code}`} aria-hidden="true" />
+                <span className="flag-code">{label}</span>
+              </button>
+            ))}
+          </div>
+
+          <button
+            type="button"
+            className="contrast-toggle"
+            aria-label={isDark ? t('contrast.light') : t('contrast.dark')}
+            aria-pressed={isDark}
+            title={isDark ? t('contrast.lightTitle') : t('contrast.darkTitle')}
+            onClick={toggleTheme}
+          >
+            <i className={`bi ${isDark ? 'bi-sun-fill' : 'bi-moon-fill'}`} aria-hidden="true" />
+          </button>
+
+          <button className="menu-button" aria-label={t('menu.open')} onClick={() => setOpen(!open)}>
+            {open ? <X /> : <Menu />}
+          </button>
+        </div>
+
+        <nav className={open ? 'nav open' : 'nav'} aria-label="Navegacao principal">
+          <NavLink
+            to="/#inicio"
+            onClick={openHome}
+            className={({ isActive }) => (isActive && location.hash !== '#convites' ? 'active' : '')}
+          >
+            {t('nav.home')}
+          </NavLink>
+
           <div className={`projects-menu ${projectsOpen ? 'open' : ''}`}>
-            <button type="button" className="projects-trigger" aria-expanded={projectsOpen} aria-controls="projects-dropdown" onClick={() => setProjectsOpen(!projectsOpen)}>
-              Nossos Projetos <ChevronDown size={16} />
+            <button
+              type="button"
+              className="projects-trigger"
+              aria-expanded={projectsOpen}
+              aria-controls="projects-dropdown"
+              onClick={() => setProjectsOpen(!projectsOpen)}
+            >
+              {t('nav.projects')} <ChevronDown size={16} />
             </button>
             <div className="projects-dropdown" id="projects-dropdown">
-              <NavLink to="/fundacao-aggape#inicio" onClick={() => openProject('/fundacao-aggape#inicio')}>Fundação AGGAPE</NavLink>
-              <NavLink to="/projeto-evangelistico#inicio" onClick={() => openProject('/projeto-evangelistico#inicio')}>Projeto Evangelístico</NavLink>
-              <NavLink to="/igreja-nas-ruas#inicio" onClick={() => openProject('/igreja-nas-ruas#inicio')}>A Igreja nas Ruas</NavLink>
+              <NavLink to="/fundacao-aggape#inicio" onClick={() => openProject('/fundacao-aggape#inicio')}>
+                {t('nav.foundation')}
+              </NavLink>
+              <NavLink to="/projeto-evangelistico#inicio" onClick={() => openProject('/projeto-evangelistico#inicio')}>
+                {t('nav.evangelisticProject')}
+              </NavLink>
+              <NavLink to="/igreja-nas-ruas#inicio" onClick={() => openProject('/igreja-nas-ruas#inicio')}>
+                {t('nav.churchOnStreets')}
+              </NavLink>
             </div>
           </div>
-          {links.map(([to,label]) => <NavLink key={to} to={to} onClick={to === '/#convites' ? openInvitations : to === '/musicas#inicio' ? openMusic : to.startsWith('/projeto-evangelistico') ? () => openProject(to) : closeMenu} className={({isActive}) => isActive && to !== '/#convites' ? 'active' : ''}>{label}</NavLink>)}
+
+          {links.map(([to, label]) => (
+            <NavLink
+              key={to}
+              to={to}
+              onClick={
+                to === '/#convites'
+                  ? openInvitations
+                  : to === '/musicas#inicio'
+                    ? openMusic
+                    : to.startsWith('/projeto-evangelistico') || to.startsWith('/igreja-nas-ruas')
+                      ? () => openProject(to)
+                      : closeMenu
+              }
+              className={({ isActive }) => (isActive && to !== '/#convites' ? 'active' : '')}
+            >
+              {t(label)}
+            </NavLink>
+          ))}
         </nav>
       </div>
     </header>

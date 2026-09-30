@@ -1,4 +1,5 @@
 import InvitationCard from '../../components/InvitationCard/InvitationCard'
+import InvitationLanguages from '../../components/InvitationLanguages/InvitationLanguages'
 import { invitations } from '../../data/invitations'
 
 export default function Invitations() {
@@ -27,6 +28,8 @@ export default function Invitations() {
               As medidas do papel fotográfico auto adesivo, alto brilho para o envelope do convite são 14,85cm x 10,5cm, ou seja, metade de uma folha A4 (29,7 x 21cm), 130g e custam cerca de 25,80 Reais por 50 folhas. Rende 100 adesivos para 100 envelopes.
             </strong>
           </p>
+
+          <InvitationLanguages />
         </div>
 
         <div className="invitation-grid">

@@ -1,0 +1,19 @@
+{
+  "name": "Almoço com Deus",
+  "short_name": "Almoço com Deus",
+  "description": "Projeto evangelístico de confraternização, música, acolhimento e evangelização criado por Ev. Mister Gandhi.",
+  "lang": "pt-BR",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#b8860b",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
