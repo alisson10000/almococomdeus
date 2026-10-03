@@ -70,6 +70,16 @@ export default function IgrejaNasRuas() {
               <p><strong>Nome:</strong> Anathan Gandhi Geththx</p>
               <p><strong>Banco:</strong> Santander</p>
             </div>
+            <div className="donation-bank">
+              <span>Conta bancária internacional</span>
+              <p><strong>Beneficiary Name:</strong> ANATHAN GANDHI GETHTHX</p>
+              <p><strong>Currency:</strong> USD Dolar dos Eua</p>
+              <p><strong>Beneficiary Bank:</strong> BANCO SANTANDER (BRASIL) S.A.</p>
+              <p><strong>SWIFT - Beneficiary Bank:</strong> BSCHBRSPXXX</p>
+              <p><strong>IBAN:</strong> BR5190400888013910010626836C1</p>
+              <p><strong>Correspondent Bank:</strong> STANDARD CHARTERED BANK</p>
+              <p><strong>SWIFT - Correspondent Bank:</strong> SCBLUS33XXX</p>
+            </div>
             <div className="donation-qrcode" id="doacoes">
               <img src={qrCode} alt="QR Code para contribuição via PIX" loading="lazy" />
               <span>Escaneie o QR Code para contribuir</span>

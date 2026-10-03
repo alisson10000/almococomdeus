@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 
 const googleTranslateElementId = 'google_translate_element'
-const supportedLanguages = 'pt,en,es,fr,de'
+const supportedLanguages = 'pt,it,en,es,fr,de,ru'
 
 declare global {
   interface Window {

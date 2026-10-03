@@ -7,6 +7,7 @@ import ScrollToHash from './components/ScrollToHash'
 import SeoManager from './components/SeoManager'
 
 const Home = lazy(() => import('./pages/Home'))
+const Biografia = lazy(() => import('./pages/Biografia'))
 const Projeto = lazy(() => import('./pages/Projeto'))
 const FundacaoAggape = lazy(() => import('./pages/FundacaoAggape'))
 const ProjetoEvangelistico = lazy(() => import('./pages/ProjetoEvangelistico'))
@@ -26,6 +27,7 @@ export default function App() {
       <Suspense fallback={<main className="page-loader">Carregando...</main>}>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/biografia" element={<Biografia />} />
           <Route path="/projeto" element={<Projeto />} />
           <Route path="/fundacao-aggape" element={<FundacaoAggape />} />
           <Route path="/projeto-evangelistico" element={<ProjetoEvangelistico />} />

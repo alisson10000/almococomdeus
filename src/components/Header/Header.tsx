@@ -7,17 +7,17 @@ import { useContrastTheme } from '../../hooks/useContrastTheme'
 const links = [
   ['/#convites', 'nav.invitations'],
   ['/igreja-nas-ruas#doacoes', 'nav.donations'],
-  ['/musicas#inicio', 'nav.youtubeMusic'],
-  ['/projeto-evangelistico#musicas-cd-gandhi', 'nav.musicDownloads'],
   ['/fale-conosco#inicio', 'nav.contact'],
 ]
 
 const languages = [
   ['pt', 'PT', 'language.portuguese'],
+  ['it', 'IT', 'language.italian'],
   ['en', 'EN', 'language.english'],
   ['es', 'ES', 'language.spanish'],
   ['fr', 'FR', 'language.french'],
   ['de', 'DE', 'language.german'],
+  ['ru', 'RU', 'language.russian'],
 ]
 
 export default function Header() {
@@ -25,12 +25,14 @@ export default function Header() {
   const { i18n, t } = useTranslation()
   const [open, setOpen] = useState(false)
   const [projectsOpen, setProjectsOpen] = useState(false)
+  const [musicOpen, setMusicOpen] = useState(false)
   const { isDark, toggleTheme } = useContrastTheme()
   const activeLanguage = i18n.resolvedLanguage ?? i18n.language
 
   function closeMenu() {
     setOpen(false)
     setProjectsOpen(false)
+    setMusicOpen(false)
   }
 
   function openInvitations(event: MouseEvent<HTMLAnchorElement>) {
@@ -77,13 +79,13 @@ export default function Header() {
       <div className="container header-inner">
         <Link className="brand" to="/" onClick={closeMenu}>
           <span className="brand-mark">*</span>
-          <span>
+          <span className="brand-content">
             <strong>{t('brand.name')}</strong>
             <small>{t('brand.subtitle')}</small>
           </span>
         </Link>
 
-        <div className="header-actions">
+        <div className="brand-controls">
           <div className="language-flags notranslate" aria-label={t('language.label')}>
             {languages.map(([code, label, titleKey]) => (
               <button
@@ -111,7 +113,9 @@ export default function Header() {
           >
             <i className={`bi ${isDark ? 'bi-sun-fill' : 'bi-moon-fill'}`} aria-hidden="true" />
           </button>
+        </div>
 
+        <div className="header-actions">
           <button className="menu-button" aria-label={t('menu.open')} onClick={() => setOpen(!open)}>
             {open ? <X /> : <Menu />}
           </button>
@@ -124,6 +128,10 @@ export default function Header() {
             className={({ isActive }) => (isActive && location.hash !== '#convites' ? 'active' : '')}
           >
             {t('nav.home')}
+          </NavLink>
+
+          <NavLink to="/biografia#inicio" onClick={() => openProject('/biografia#inicio')}>
+            {t('nav.biography')}
           </NavLink>
 
           <div className={`projects-menu ${projectsOpen ? 'open' : ''}`}>
@@ -145,6 +153,29 @@ export default function Header() {
               </NavLink>
               <NavLink to="/igreja-nas-ruas#inicio" onClick={() => openProject('/igreja-nas-ruas#inicio')}>
                 {t('nav.churchOnStreets')}
+              </NavLink>
+            </div>
+          </div>
+
+          <div className={`projects-menu ${musicOpen ? 'open' : ''}`}>
+            <button
+              type="button"
+              className="projects-trigger"
+              aria-expanded={musicOpen}
+              aria-controls="music-dropdown"
+              onClick={() => setMusicOpen(!musicOpen)}
+            >
+              {t('nav.music')} <ChevronDown size={16} />
+            </button>
+            <div className="projects-dropdown" id="music-dropdown">
+              <NavLink to="/musicas#inicio" onClick={openMusic}>
+                {t('nav.youtubeMusic')}
+              </NavLink>
+              <NavLink
+                to="/projeto-evangelistico#musicas-cd-gandhi"
+                onClick={() => openProject('/projeto-evangelistico#musicas-cd-gandhi')}
+              >
+                {t('nav.musicDownloads')}
               </NavLink>
             </div>
           </div>

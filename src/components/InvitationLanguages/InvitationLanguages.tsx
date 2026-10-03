@@ -1,9 +1,11 @@
 const languages = [
   ['pt', 'Português'],
+  ['it', 'Italiano'],
   ['en', 'Inglês'],
   ['es', 'Espanhol'],
   ['fr', 'Francês'],
   ['de', 'Alemão'],
+  ['ru', 'Russo'],
 ]
 
 export default function InvitationLanguages() {
