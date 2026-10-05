@@ -72,7 +72,7 @@ export default function IgrejaNasRuas() {
             </div>
             <div className="donation-bank">
               <span>Conta bancária internacional</span>
-              <p><strong>Beneficiary Name:</strong> ANATHAN GANDHI GETHTHX</p>
+              <p><strong>Beneficiary Name:</strong> ANATHAN GANDHI GETHITHX</p>
               <p><strong>Currency:</strong> USD Dolar dos Eua</p>
               <p><strong>Beneficiary Bank:</strong> BANCO SANTANDER (BRASIL) S.A.</p>
               <p><strong>SWIFT - Beneficiary Bank:</strong> BSCHBRSPXXX</p>
