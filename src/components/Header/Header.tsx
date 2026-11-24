@@ -1,8 +1,10 @@
-import { ChevronDown, Menu, X } from 'lucide-react'
-import { type MouseEvent, useState } from 'react'
+import { ChevronDown, Menu, Users, X } from 'lucide-react'
+import { type MouseEvent, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link, NavLink, useLocation } from 'react-router-dom'
 import { useContrastTheme } from '../../hooks/useContrastTheme'
+
+const visitorSessionKey = 'almoco-com-deus:visitor-session'
 
 const links = [
   ['/#convites', 'nav.invitations'],
@@ -28,6 +30,44 @@ export default function Header() {
   const [musicOpen, setMusicOpen] = useState(false)
   const { isDark, toggleTheme } = useContrastTheme()
   const activeLanguage = i18n.resolvedLanguage ?? i18n.language
+  const [visitorTotal, setVisitorTotal] = useState<number>()
+
+  useEffect(() => {
+    let mounted = true
+
+    async function loadVisitorTotal() {
+      let response: Response | undefined
+      try {
+        const sessionId = sessionStorage.getItem(visitorSessionKey) ?? crypto.randomUUID()
+        sessionStorage.setItem(visitorSessionKey, sessionId)
+
+        response = await fetch('/api/visitors', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ sessionId }),
+        })
+      } catch {
+        // A consulta do total continua disponível sem o registro da sessão.
+      }
+
+      try {
+        if (!response?.ok || !response.headers.get('content-type')?.includes('application/json')) {
+          response = await fetch('/api/visitors')
+        }
+        if (!response.ok) return
+        const { total } = await response.json()
+        if (mounted && Number.isSafeInteger(total) && total >= 0) setVisitorTotal(total)
+      } catch {
+        // A indisponibilidade do contador não interfere na navegação.
+      }
+    }
+
+    void loadVisitorTotal()
+    return () => { mounted = false }
+  }, [])
+
+  const visitorNumberFormat = new Intl.NumberFormat(activeLanguage, { useGrouping: false })
+  const formattedTotal = visitorNumberFormat.format(0).repeat(6) + visitorNumberFormat.format(visitorTotal ?? 0)
 
   function closeMenu() {
     setOpen(false)
@@ -199,6 +239,10 @@ export default function Header() {
             </NavLink>
           ))}
         </nav>
+        <span className="header-visitor-count notranslate" translate="no" role="status">
+          <Users size={16} aria-hidden="true" />
+          {t('visitorTotal')}: {formattedTotal}
+        </span>
       </div>
     </header>
   )

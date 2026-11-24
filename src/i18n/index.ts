@@ -39,6 +39,7 @@ const resources = {
         lightTitle: 'Contraste claro',
         darkTitle: 'Contraste escuro',
       },
+      visitorTotal: 'Total de visitantes',
       menu: {
         open: 'Abrir menu',
       },
@@ -80,6 +81,7 @@ const resources = {
         lightTitle: 'Light contrast',
         darkTitle: 'Dark contrast',
       },
+      visitorTotal: 'Total visitors',
       menu: {
         open: 'Open menu',
       },
@@ -121,6 +123,7 @@ const resources = {
         lightTitle: 'Contraste claro',
         darkTitle: 'Contraste oscuro',
       },
+      visitorTotal: 'Total de visitantes',
       menu: {
         open: 'Abrir menú',
       },
@@ -162,6 +165,7 @@ const resources = {
         lightTitle: 'Contraste clair',
         darkTitle: 'Contraste sombre',
       },
+      visitorTotal: 'Nombre total de visiteurs',
       menu: {
         open: 'Ouvrir le menu',
       },
@@ -203,6 +207,7 @@ const resources = {
         lightTitle: 'Heller Kontrast',
         darkTitle: 'Dunkler Kontrast',
       },
+      visitorTotal: 'Besucher insgesamt',
       menu: {
         open: 'Menü öffnen',
       },
@@ -244,6 +249,7 @@ const resources = {
         lightTitle: 'Contrasto chiaro',
         darkTitle: 'Contrasto scuro',
       },
+      visitorTotal: 'Totale visitatori',
       menu: {
         open: 'Apri menu',
       },
@@ -285,6 +291,7 @@ const resources = {
         lightTitle: 'Светлый контраст',
         darkTitle: 'Темный контраст',
       },
+      visitorTotal: 'Всего посетителей',
       menu: {
         open: 'Открыть меню',
       },

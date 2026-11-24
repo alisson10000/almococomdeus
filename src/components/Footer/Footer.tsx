@@ -1,5 +1,4 @@
 import { ArrowUp } from 'lucide-react'
-import { Link } from 'react-router-dom'
 
 export default function Footer() {
   return (
@@ -7,7 +6,10 @@ export default function Footer() {
       <div className="container footer-grid">
         <div><h3>Almoço com Deus</h3><p>Projeto evangelístico de confraternização e acolhimento.</p><p><strong>Idealizador:</strong> Ev. Mister Gandhi</p></div>
         
-        <div><h4>Gandhi Compositor</h4><p>As músicas fornecidas pelo autor estão reunidas na área de músicas do projeto.</p></div>
+        <div>
+          <h4>Gandhi Compositor</h4>
+          <p>As músicas fornecidas pelo autor estão reunidas na área de músicas do projeto.</p>
+        </div>
       </div>
       <div className="footer-bottom">
         <div className="container footer-bottom-inner">

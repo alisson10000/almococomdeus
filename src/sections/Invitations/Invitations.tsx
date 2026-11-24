@@ -1,3 +1,4 @@
+import { Download } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 
 import germanEnvelopeDocx from '../../assets/images/6-CONVITE-ENVELOPE-ALEMAO.docx?url'
@@ -6,9 +7,10 @@ import frenchEnvelopeDocx from '../../assets/images/FRANCA/CONVITE-ENVELOPE-FRAN
 import englishEnvelopeDocx from '../../assets/images/INGLES/6-CONVITE-ENVELOPE-INGLES.docx?url'
 import italianEnvelopeDocx from '../../assets/images/ITALIANO/6-CONVITE-ITALIANO.docx?url'
 import russianEnvelopeDocx from '../../assets/images/RUSSO/6-ENVELOPE-WORD-RUSSO.docx?url'
+import portugueseEnvelopeDocx from '../../assets/images/PORTUGUES/6 ENVELOPE WORD- PORTUGUES.docx?url'
 import InvitationCard from '../../components/InvitationCard/InvitationCard'
 import InvitationLanguages from '../../components/InvitationLanguages/InvitationLanguages'
-import { englishInvitations, frenchInvitations, germanInvitations, invitations, italianInvitations, russianInvitations, spanishInvitations } from '../../data/invitations'
+import { englishInvitations, frenchInvitations, germanInvitations, homeInvitations, italianInvitations, russianInvitations, spanishInvitations } from '../../data/invitations'
 import type { Invitation } from '../../types'
 
 const germanVersionsByCard = new Map<number, Partial<Omit<Invitation, 'id'>>>(
@@ -112,6 +114,11 @@ export default function Invitations() {
     : isSpanish ? spanishVersionsByCard
     : isGerman ? germanVersionsByCard
     : undefined
+  const envelope = versionsByCard?.get(7) ?? {
+    downloadUrl: portugueseEnvelopeDocx,
+    downloadName: '6 ENVELOPE WORD- PORTUGUES.docx',
+    downloadLabel: 'Baixar documento do Word',
+  }
 
   return (
     <section className="section" id="convites">
@@ -143,7 +150,7 @@ export default function Invitations() {
         </div>
 
         <div className="invitation-grid" key={language}>
-          {invitations.map((invitation) => (
+          {homeInvitations.map((invitation) => (
             <InvitationCard
               key={invitation.id}
               manualTextTranslation={((isSpanish || isFrench || isEnglish || isItalian || isRussian) && invitation.id !== 7) || (invitation.id === 5 && (language === 'pt' || isGerman))}
@@ -151,6 +158,10 @@ export default function Invitations() {
             />
           ))}
         </div>
+        <a key={`envelope-${language}`} className="invitation-download" href={envelope.downloadUrl} download={envelope.downloadName}>
+          <Download size={18} aria-hidden="true" />
+          Convite para envelope — {envelope.downloadLabel}
+        </a>
       </div>
     </section>
   )

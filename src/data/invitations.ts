@@ -1,4 +1,16 @@
 import type { Invitation } from '../types'
+import portugueseCrown from '../assets/images/PORTUGUES/UNICA  JPEG/À RAINHA.jpg'
+import portugueseCrownPdf from '../assets/images/PORTUGUES/PDF/A-RAINHA-UNICA.pdf'
+import portugueseLunch from '../assets/images/PORTUGUES/UNICA  JPEG/ALMOÇO.jpg'
+import portugueseLunchPdf from '../assets/images/PORTUGUES/PDF/ALMOCO.pdf'
+import portugueseHotDog from '../assets/images/PORTUGUES/UNICA  JPEG/CACHORRO QUENTE.jpg'
+import portugueseHotDogPdf from '../assets/images/PORTUGUES/PDF/HOT-DOG.pdf'
+import portugueseFeijoada from '../assets/images/PORTUGUES/UNICA  JPEG/FEIJOADA.jpg'
+import portugueseFeijoadaPdf from '../assets/images/PORTUGUES/PDF/FEIJOADA.pdf'
+import portugueseBreakfast from '../assets/images/PORTUGUES/UNICA  JPEG/CAFÉ DA MANHÃ.jpg'
+import portugueseBreakfastPdf from '../assets/images/PORTUGUES/PDF/CAFE-DA-MANHA.pdf'
+import portugueseDinner from '../assets/images/PORTUGUES/UNICA  JPEG/JANTAR COMPLETO.jpg'
+import portugueseDinnerPdf from '../assets/images/PORTUGUES/PDF/JANTAR-COMPLETO.pdf'
 import rainha from '../assets/images/rainha-do-lar.jpeg'
 import almoco from '../assets/images/convite-almoco.jpeg'
 import hotdog from '../assets/images/convite-hotdog.jpeg'
@@ -445,4 +457,28 @@ export const invitations: Invitation[] = [
     downloadName: 'convite-envelope.docx',
     downloadLabel: 'Baixar documento do word',
   },
+]
+
+const portugueseArtworkByCard = new Map<number, Pick<Invitation, 'image' | 'downloadUrl' | 'downloadName'>>([
+  [1, { image: portugueseCrown, downloadUrl: portugueseCrownPdf, downloadName: 'A-RAINHA-UNICA.pdf' }],
+  [2, { image: portugueseLunch, downloadUrl: portugueseLunchPdf, downloadName: 'ALMOCO.pdf' }],
+  [3, { image: portugueseHotDog, downloadUrl: portugueseHotDogPdf, downloadName: 'HOT-DOG.pdf' }],
+  [5, { image: portugueseFeijoada, downloadUrl: portugueseFeijoadaPdf, downloadName: 'FEIJOADA.pdf' }],
+  [6, { image: portugueseBreakfast, downloadUrl: portugueseBreakfastPdf, downloadName: 'CAFE-DA-MANHA.pdf' }],
+])
+
+const dinnerInvitation: Invitation = {
+  id: 12,
+  title: 'Convite — Jantar Completo',
+  description: 'Verso do convite À Rainha do Lar.',
+  image: portugueseDinner,
+  downloadUrl: portugueseDinnerPdf,
+  downloadName: 'JANTAR-COMPLETO.pdf',
+}
+
+export const homeInvitations = [
+  ...invitations
+    .filter(({ id }) => id !== 7)
+    .map((invitation) => ({ ...invitation, ...portugueseArtworkByCard.get(invitation.id) })),
+  dinnerInvitation,
 ]

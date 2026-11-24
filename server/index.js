@@ -2,11 +2,16 @@ import cors from 'cors'
 import dotenv from 'dotenv'
 import express from 'express'
 import nodemailer from 'nodemailer'
+import { getVisitorTotal, registerVisit } from './visitors.js'
 
 dotenv.config()
 
 const app = express()
 const port = Number(process.env.PORT || 3001)
+
+// O contador usa a mesma origem do site e tem validação própria no POST.
+app.get('/api/visitors', getVisitorTotal)
+app.post('/api/visitors', express.json({ limit: '1kb' }), registerVisit)
 
 // ======================================================
 // CORS
