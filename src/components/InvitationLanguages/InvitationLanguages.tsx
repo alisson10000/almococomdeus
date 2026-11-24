@@ -1,3 +1,5 @@
+import { useTranslation } from 'react-i18next'
+
 const languages = [
   ['pt', 'Português'],
   ['it', 'Italiano'],
@@ -9,6 +11,9 @@ const languages = [
 ]
 
 export default function InvitationLanguages() {
+  const { i18n } = useTranslation()
+  const activeLanguage = i18n.resolvedLanguage ?? i18n.language
+
   return (
     <div className="invitation-languages" aria-label="Idiomas dos convites">
       <p>
@@ -17,10 +22,16 @@ export default function InvitationLanguages() {
 
       <div className="invitation-language-flags">
         {languages.map(([code, label]) => (
-          <span key={code} className="invitation-language-item">
+          <button
+            key={code}
+            type="button"
+            className="invitation-language-item"
+            aria-pressed={activeLanguage === code}
+            onClick={() => i18n.changeLanguage(code)}
+          >
             <span className={`flag flag-${code}`} aria-hidden="true" />
             <span>{label}</span>
-          </span>
+          </button>
         ))}
       </div>
     </div>

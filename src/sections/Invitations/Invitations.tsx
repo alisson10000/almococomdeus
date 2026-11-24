@@ -1,8 +1,118 @@
+import { useTranslation } from 'react-i18next'
+
+import germanEnvelopeDocx from '../../assets/images/6-CONVITE-ENVELOPE-ALEMAO.docx?url'
+import spanishEnvelopeDocx from '../../assets/images/ESPANHOL/6 convite-envelope alisson ESPANHOL.docx?url'
+import frenchEnvelopeDocx from '../../assets/images/FRANCA/CONVITE-ENVELOPE-FRANCES.docx?url'
+import englishEnvelopeDocx from '../../assets/images/INGLES/6-CONVITE-ENVELOPE-INGLES.docx?url'
+import italianEnvelopeDocx from '../../assets/images/ITALIANO/6-CONVITE-ITALIANO.docx?url'
+import russianEnvelopeDocx from '../../assets/images/RUSSO/6-ENVELOPE-WORD-RUSSO.docx?url'
 import InvitationCard from '../../components/InvitationCard/InvitationCard'
 import InvitationLanguages from '../../components/InvitationLanguages/InvitationLanguages'
-import { invitations } from '../../data/invitations'
+import { englishInvitations, frenchInvitations, germanInvitations, invitations, italianInvitations, russianInvitations, spanishInvitations } from '../../data/invitations'
+import type { Invitation } from '../../types'
+
+const germanVersionsByCard = new Map<number, Partial<Omit<Invitation, 'id'>>>(
+  germanInvitations.map(({ id, ...version }) => [
+    id,
+    {
+      ...version,
+      ...(id === 5 && {
+        title: 'Einladung — Brasilianische Feijoada',
+        description: 'Rückseite der Einladung „An die Königin des Hauses“.',
+      }),
+      downloadLabel: 'PDF herunterladen',
+    },
+  ]),
+)
+
+germanVersionsByCard.set(7, {
+  downloadUrl: germanEnvelopeDocx,
+  downloadName: '6-CONVITE-ENVELOPE-ALEMAO.docx',
+  downloadLabel: 'Word-Dokument herunterladen',
+})
+
+const spanishVersionsByCard = new Map<number, Partial<Omit<Invitation, 'id'>>>(
+  spanishInvitations.map(({ id, ...version }) => [
+    id,
+    { ...version, downloadLabel: 'Descargar PDF' },
+  ]),
+)
+
+spanishVersionsByCard.set(7, {
+  downloadUrl: spanishEnvelopeDocx,
+  downloadName: '6 convite-envelope alisson ESPANHOL.docx',
+  downloadLabel: 'Descargar documento de Word',
+})
+
+const frenchVersionsByCard = new Map<number, Partial<Omit<Invitation, 'id'>>>(
+  frenchInvitations.map(({ id, ...version }) => [
+    id,
+    { ...version, downloadLabel: 'Télécharger le PDF' },
+  ]),
+)
+
+frenchVersionsByCard.set(7, {
+  downloadUrl: frenchEnvelopeDocx,
+  downloadName: 'CONVITE-ENVELOPE-FRANCES.docx',
+  downloadLabel: 'Télécharger le document Word',
+})
+
+const englishVersionsByCard = new Map<number, Partial<Omit<Invitation, 'id'>>>(
+  englishInvitations.map(({ id, ...version }) => [
+    id,
+    { ...version, downloadLabel: 'Download PDF' },
+  ]),
+)
+
+englishVersionsByCard.set(7, {
+  downloadUrl: englishEnvelopeDocx,
+  downloadName: '6-CONVITE-ENVELOPE-INGLES.docx',
+  downloadLabel: 'Download Word document',
+})
+
+const italianVersionsByCard = new Map<number, Partial<Omit<Invitation, 'id'>>>(
+  italianInvitations.map(({ id, ...version }) => [
+    id,
+    { ...version, downloadLabel: 'Scarica il PDF' },
+  ]),
+)
+
+italianVersionsByCard.set(7, {
+  downloadUrl: italianEnvelopeDocx,
+  downloadName: '6-CONVITE-ITALIANO.docx',
+  downloadLabel: 'Scarica il documento Word',
+})
+
+const russianVersionsByCard = new Map<number, Partial<Omit<Invitation, 'id'>>>(
+  russianInvitations.map(({ id, ...version }) => [
+    id,
+    { ...version, downloadLabel: 'Скачать PDF' },
+  ]),
+)
+
+russianVersionsByCard.set(7, {
+  downloadUrl: russianEnvelopeDocx,
+  downloadName: '6-ENVELOPE-WORD-RUSSO.docx',
+  downloadLabel: 'Скачать документ Word',
+})
 
 export default function Invitations() {
+  const { i18n } = useTranslation()
+  const language = (i18n.resolvedLanguage ?? i18n.language)?.split('-')[0]
+  const isGerman = language === 'de'
+  const isSpanish = language === 'es'
+  const isFrench = language === 'fr'
+  const isEnglish = language === 'en'
+  const isItalian = language === 'it'
+  const isRussian = language === 'ru'
+  const versionsByCard = isRussian ? russianVersionsByCard
+    : isItalian ? italianVersionsByCard
+    : isEnglish ? englishVersionsByCard
+    : isFrench ? frenchVersionsByCard
+    : isSpanish ? spanishVersionsByCard
+    : isGerman ? germanVersionsByCard
+    : undefined
+
   return (
     <section className="section" id="convites">
       <div className="container">
@@ -32,11 +142,12 @@ export default function Invitations() {
           <InvitationLanguages />
         </div>
 
-        <div className="invitation-grid">
+        <div className="invitation-grid" key={language}>
           {invitations.map((invitation) => (
             <InvitationCard
               key={invitation.id}
-              invitation={invitation}
+              manualTextTranslation={((isSpanish || isFrench || isEnglish || isItalian || isRussian) && invitation.id !== 7) || (invitation.id === 5 && (language === 'pt' || isGerman))}
+              invitation={versionsByCard ? { ...invitation, ...versionsByCard.get(invitation.id) } : invitation}
             />
           ))}
         </div>
