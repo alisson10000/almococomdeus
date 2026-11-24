@@ -6,6 +6,16 @@ import { useContrastTheme } from '../../hooks/useContrastTheme'
 
 const visitorSessionKey = 'almoco-com-deus:visitor-session'
 
+function createVisitorSessionId() {
+  if (typeof crypto.randomUUID === 'function') return crypto.randomUUID()
+
+  const bytes = crypto.getRandomValues(new Uint8Array(16))
+  bytes[6] = (bytes[6] & 0x0f) | 0x40
+  bytes[8] = (bytes[8] & 0x3f) | 0x80
+  const hex = Array.from(bytes, (byte) => byte.toString(16).padStart(2, '0')).join('')
+  return [hex.slice(0, 8), hex.slice(8, 12), hex.slice(12, 16), hex.slice(16, 20), hex.slice(20)].join('-')
+}
+
 const links = [
   ['/#convites', 'nav.invitations'],
   ['/igreja-nas-ruas#doacoes', 'nav.donations'],
@@ -33,37 +43,49 @@ export default function Header() {
   const [visitorTotal, setVisitorTotal] = useState<number>()
 
   useEffect(() => {
-    let mounted = true
+    const controller = new AbortController()
+    let retry: number | undefined
 
     async function loadVisitorTotal() {
       let response: Response | undefined
+      let registered = false
       try {
-        const sessionId = sessionStorage.getItem(visitorSessionKey) ?? crypto.randomUUID()
+        const sessionId = sessionStorage.getItem(visitorSessionKey) ?? createVisitorSessionId()
         sessionStorage.setItem(visitorSessionKey, sessionId)
 
         response = await fetch('/api/visitors', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ sessionId }),
+          signal: controller.signal,
         })
+        registered = response.ok && !!response.headers.get('content-type')?.includes('application/json')
       } catch {
         // A consulta do total continua disponível sem o registro da sessão.
       }
 
       try {
-        if (!response?.ok || !response.headers.get('content-type')?.includes('application/json')) {
-          response = await fetch('/api/visitors')
+        if (!registered) {
+          response = await fetch('/api/visitors', { signal: controller.signal })
         }
-        if (!response.ok) return
-        const { total } = await response.json()
-        if (mounted && Number.isSafeInteger(total) && total >= 0) setVisitorTotal(total)
+        if (response?.ok) {
+          const { total } = await response.json()
+          if (!controller.signal.aborted && Number.isSafeInteger(total) && total >= 0) {
+            setVisitorTotal(total)
+            if (registered) return
+          }
+        }
       } catch {
         // A indisponibilidade do contador não interfere na navegação.
       }
+      if (!controller.signal.aborted) retry = window.setTimeout(loadVisitorTotal, 30_000)
     }
 
     void loadVisitorTotal()
-    return () => { mounted = false }
+    return () => {
+      controller.abort()
+      window.clearTimeout(retry)
+    }
   }, [])
 
   const visitorNumberFormat = new Intl.NumberFormat(activeLanguage, { useGrouping: false })
